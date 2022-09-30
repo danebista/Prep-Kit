@@ -6,4 +6,3 @@ class Solution {
         return nums;
     }
 }
-
