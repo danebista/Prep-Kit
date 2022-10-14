@@ -1,4 +1,4 @@
-public class Solution {
+class Solution {
     public int reversePairs(int[] nums) {
 
         return mergeSort(nums, 0, nums.length - 1);
@@ -20,11 +20,14 @@ public class Solution {
     public int merge(int[] nums, int low, int mid, int high) {
         int j = mid + 1;
         int counter = 0;
-        for (int i = low; i <= mid; i++) {
-            while (j <= high && nums[i] > (long) 2 * nums[j]) {
+        int i = low;
+        while (i <= mid && j <= high) {
+            if (nums[i] > (long) 2 * nums[j]) {
+                counter += (mid + 1 - i);
                 j++;
+            } else {
+                i++;
             }
-            counter += (j - (mid + 1));
         }
 
         int l = low;
@@ -44,8 +47,8 @@ public class Solution {
         while (r <= high)
             temp.add(nums[r++]);
 
-        for (int i = low; i <= high; i++) {
-            nums[i] = temp.get(i - low);
+        for (int m = low; m <= high; m++) {
+            nums[m] = temp.get(m - low);
         }
 
         return counter;
