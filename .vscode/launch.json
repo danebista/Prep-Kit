@@ -1,0 +1,63 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Current File",
+            "request": "launch",
+            "mainClass": "${file}"
+        },
+        {
+            "type": "java",
+            "name": "Launch BreakingTheRecords",
+            "request": "launch",
+            "mainClass": "BreakingTheRecords",
+            "projectName": "Prep-Kit_cca8558e"
+        },
+        {
+            "type": "java",
+            "name": "Launch ConstructALinkedListThatStoresTheValuesAtEachLevel",
+            "request": "launch",
+            "mainClass": "ConstructALinkedListThatStoresTheValuesAtEachLevel",
+            "projectName": "Prep-Kit_cca8558e"
+        },
+        {
+            "type": "java",
+            "name": "Launch ConstructMinimalBSTfromSortedTree",
+            "request": "launch",
+            "mainClass": "ConstructMinimalBSTfromSortedTree",
+            "projectName": "Prep-Kit_cca8558e"
+        },
+        {
+            "type": "java",
+            "name": "Launch FlattenABinaryTreeToALinkedList",
+            "request": "launch",
+            "mainClass": "FlattenABinaryTreeToALinkedList",
+            "projectName": "Prep-Kit_cca8558e"
+        },
+        {
+            "type": "java",
+            "name": "Launch GraphReachNode",
+            "request": "launch",
+            "mainClass": "GraphReachNode",
+            "projectName": "Prep-Kit_cca8558e"
+        },
+        {
+            "type": "java",
+            "name": "Launch SortColors",
+            "request": "launch",
+            "mainClass": "SortColors",
+            "projectName": "Prep-Kit_cca8558e"
+        },
+        {
+            "type": "java",
+            "name": "Launch TwoSum",
+            "request": "launch",
+            "mainClass": "TwoSum",
+            "projectName": "Prep-Kit_cca8558e"
+        }
+    ]
+}
