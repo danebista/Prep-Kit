@@ -1,20 +1,25 @@
 class Solution {
     public int jump(int[] nums) {
-        int jumps = 0;
-        int left = 0;
-        int right = 0;
-        while (right < nums.length - 1) {
-            int max = 0;
-            for (int j = left; j <= right; j++) {
+        int[] dp = new int[nums.length];
+        Arrays.fill(dp, -1);
+        return helper(nums, 0, dp);
 
-                max = Math.max(max, j + nums[j]);
-            }
-            left = right + 1;
-            right = max;
-            jumps += 1;
+    }
+
+    public int helper(int[] nums, int i, int[] dp) {
+        if (i >= nums.length - 1)
+            return 0;
+
+        if (dp[i] != -1)
+            return dp[i];
+
+        int minCost = nums.length;
+
+        for (int k = 1; k <= nums[i]; k++) {
+            minCost = Math.min(minCost, 1 + helper(nums, i + k, dp));
         }
 
-        return jumps;
+        return dp[i] = minCost;
     }
 }
 
