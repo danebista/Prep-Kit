@@ -25,3 +25,26 @@ class Solution {
     }
 
 }
+
+class Solution {
+    public int numDecodings(String s) {
+        int[] dp = new int[s.length() + 1];
+        dp[s.length()] = 1;
+        for (int index = s.length() - 1; index >= 0; index--) {
+            if (s.charAt(index) == '0') {
+                dp[index] = 0;
+                continue;
+            }
+            int res = dp[index + 1];
+
+            if (index + 1 <= s.length() - 1 && (s.charAt(index) == '1' ||
+                    (s.charAt(index) == '2' && s.charAt(index + 1) <= '6'))) {
+                res += dp[index + 2];
+            }
+            dp[index] = res;
+        }
+
+        return dp[0];
+    }
+
+}
