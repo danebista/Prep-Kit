@@ -1,0 +1,67 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> distanceK(TreeNode root, TreeNode target, int k) {
+        HashMap<TreeNode, TreeNode> hashmap = new HashMap<>();
+        Queue<TreeNode> queue = new LinkedList();
+        queue.add(root);
+        
+        while(!queue.isEmpty()){
+            TreeNode curr = queue.poll();
+            
+            if (curr.left!=null){
+                hashmap.put(curr.left, curr);
+                queue.add(curr.left);
+            }
+            
+            if(curr.right!=null){
+                hashmap.put(curr.right, curr);
+                queue.add(curr.right);
+            }
+        }
+        
+        while (!queue.isEmpty()) queue.poll();
+        
+        queue.offer(target);
+        int level = 0;
+        HashMap<TreeNode, Boolean> visited = new HashMap();
+        visited.put(target, true);
+        
+        while (!queue.isEmpty()){
+            int size = queue.size();
+         
+            if (level == k) break;
+            for (int i=0; i< size; i++){
+                TreeNode curr = queue.poll();
+                if (curr.left!=null && !visited.containsKey(curr.left)){
+                  queue.offer(curr.left);
+
+                  visited.put(curr.left, true);
+                }
+                if (curr.right!=null && !visited.containsKey(curr.right)){
+                    queue.offer(curr.right);
+                    visited.put(curr.right, true);
+                }
+                if (hashmap.containsKey(curr) && !visited.containsKey(hashmap.get(curr))){
+                    queue.offer(hashmap.get(curr));
+                    visited.put(hashmap.get(curr), true);
+                }
+            }
+            level++;
+        }
+        
+        List<Integer> result = new ArrayList<>();
+        while(!queue.isEmpty()){
+            result.add(queue.poll().val);
+        }
+        
+        return result;
+    }
+}
