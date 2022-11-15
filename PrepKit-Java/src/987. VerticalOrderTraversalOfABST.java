@@ -71,5 +71,16 @@ class Solution {
 
         return result;
 
-    }
+    }}
+
+    1 2 3 4 1 3 6
+
+    1,2,3,4 Arrays.sort(arr);for(
+
+    int i = 1;i<arr.length;i++){
+    sum+=plantTime
+    plantTime+=arr[i]
 }
+
+return sum
+;
