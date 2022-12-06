@@ -24,3 +24,27 @@ class Solution {
 
     }
 }
+//BucketSort
+class Solution {
+    public String frequencySort(String s) {
+        int[] map = new int[256];
+        int maxBucketSize = 0;
+        for (int i=0; i<s.length();i++){
+            map[s.charAt(i)]++;
+            maxBucketSize = Math.max(maxBucketSize, map[s.charAt(i)]);
+        }
+        StringBuilder[] sbs = new StringBuilder[maxBucketSize+1];
+        for (int i=0; i<256; i++){
+            for (int j=0; j<map[i]; j++){
+                if (sbs[map[i]]==null) sbs[map[i]]=new StringBuilder();
+                sbs[map[i]].append((char)i);
+            }
+        }
+        for (int i=sbs.length-1; i>=1; i--){
+            if (sbs[i]==null) continue;
+            if (sbs[0]==null) sbs[0]=new StringBuilder();
+            sbs[0].append(sbs[i]);
+        }
+        return sbs[0].toString();
+    }
+}
