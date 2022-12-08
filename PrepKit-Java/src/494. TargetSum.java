@@ -11,11 +11,8 @@ class Solution {
     public int helper(int[] nums, int target, int index, int count) {
         if (index == nums.length) {
             if (target == 0)
-                count += 1;
-            return count;
-        }
-        if (index > nums.length) {
-            return count;
+                return 1;
+            return 0;
         }
 
         if (dp.containsKey(target + ":" + index)) {
