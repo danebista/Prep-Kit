@@ -1,39 +1,32 @@
-// Uses the concept of LIS
-
 class Solution {
     public List<Integer> largestDivisibleSubset(int[] nums) {
-        Arrays.sort(nums);
-        int[] hashset = new int[nums.length];
         int[] dp = new int[nums.length];
-        int maxi = 0;
+        int[] indexStorer = new int[nums.length];
         int lastIndex = 0;
-        Arrays.fill(dp, 1);
-        for (int i = 0; i < hashset.length; i++) {
-            hashset[i] = i;
-        }
-
-        for (int i = 1; i < nums.length; i++) {
+        int maxVal = 0;
+        Arrays.sort(nums);
+        for (int i = 0; i < nums.length; i++) {
+            indexStorer[i] = i;
             for (int j = 0; j < i; j++) {
-                if (nums[i] % nums[j] != 0)
-                    continue;
-                if ((1 + dp[j]) < dp[i])
-                    continue;
-                dp[i] = 1 + dp[j];
-                hashset[i] = j;
-                if (dp[i] < maxi)
-                    continue;
-                maxi = dp[i];
-                lastIndex = i;
+                if (nums[i] % nums[j] == 0 && (1 + dp[j]) > dp[i]) {
+                    dp[i] = 1 + dp[j];
+                    indexStorer[i] = j;
+                    if (maxVal < dp[i]) {
+                        maxVal = dp[i];
+                        lastIndex = i;
+                    }
+                }
             }
         }
 
-        List<Integer> result = new ArrayList();
-        result.add(nums[lastIndex]);
-        while (hashset[lastIndex] != lastIndex) {
-            lastIndex = hashset[lastIndex];
-            result.add(nums[lastIndex]);
+        List<Integer> results = new ArrayList<>();
+        results.add(nums[lastIndex]);
+
+        while (indexStorer[lastIndex] != lastIndex) {
+            lastIndex = indexStorer[lastIndex];
+            results.add(nums[lastIndex]);
         }
 
-        return result;
+        return results;
     }
 }
