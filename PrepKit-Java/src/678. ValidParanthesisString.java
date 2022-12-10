@@ -13,7 +13,7 @@ class Solution {
                     stackBrack.pop();
                 } else if (!stackStar.isEmpty()) {
                     stackStar.pop();
-                } else {
+                } else {    
                     return false;
                 }
             }

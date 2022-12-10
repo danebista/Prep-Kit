@@ -4,3 +4,6 @@ class Solution {
          return pow==(int)pow;
     }
 }
+//4^k = n
+//log_4 n = k
+//logn/log4 = k 

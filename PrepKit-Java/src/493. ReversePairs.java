@@ -13,7 +13,7 @@ class Solution {
         int counter = mergeSort(nums, i, mid);
         counter += mergeSort(nums, mid + 1, j);
         counter += merge(nums, i, mid, j);
-
+        
         return counter;
     }
 
