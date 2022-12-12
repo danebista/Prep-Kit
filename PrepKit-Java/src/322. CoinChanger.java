@@ -59,4 +59,4 @@ class Solution {
       }
       if (prev[amount]==1e9) return -1;
       return prev[amount];
-    }
+}
