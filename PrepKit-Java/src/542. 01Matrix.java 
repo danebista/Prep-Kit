@@ -1,0 +1,46 @@
+class Solution {
+    class Pair{
+        int x; 
+        int y;
+        Pair(int x, int y){
+            this.x=x;
+            this.y=y;
+        }
+    }
+
+    public int[][] updateMatrix(int[][] mat) {
+        int[][] visited = new int[mat.length][mat[0].length];
+        Pair[] newIns = new Pair[]{
+            new Pair(-1,0), new Pair(1,0), new Pair(0,-1), new Pair(0,1)
+        };
+        Queue<Pair> queue = new LinkedList<>();
+        for (int i=0; i<mat.length; i++){
+            for (int j=0; j< mat[0].length; j++){
+                 if (mat[i][j]==0){
+                    visited[i][j]=1;
+                    Pair newPair = new Pair(i,j);
+                    queue.add(newPair);
+                 }
+            }
+        }
+        int steps =0;
+        while (!queue.isEmpty()){
+            int size = queue.size();
+            for (int i=0; i< size; i++){
+                Pair curr = queue.poll();
+                mat[curr.x][curr.y] = steps;
+                for (Pair dx: newIns){
+                    int currX = curr.x+dx.x;
+                    int currY = curr.y+dx.y;
+                    if (currX<0 || currX>=mat.length || currY<0 || currY>=mat[0].length) continue;
+                    if (visited[currX][currY]==1 || mat[currX][currY] != 1) continue;
+                    queue.offer(new Pair(currX, currY));
+                    visited[currX][currY]=1;
+                }
+            }
+            steps++;
+        }
+
+        return mat;
+    }
+}
