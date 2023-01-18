@@ -1,0 +1,24 @@
+class Solution {
+    public int minFlipsMonoIncr(String s) {
+        int oneCount = 0;
+        
+        for (char c:s.toCharArray()){
+            if (c=='1') oneCount++;
+        }
+        
+        int nowOnes = 0;
+        //Covers the case of converting all zeros to one or all ones to zero.
+        int result =Math.min(oneCount, s.length()-oneCount);
+        int curr = 0;
+
+        for (int i=0; i<s.length(); i++){
+            if (s.charAt(i)=='1') nowOnes++;
+            // Convert 1 before index + Convert 0 after index
+            curr = nowOnes + (s.length()-1-i)-(oneCount-nowOnes);
+
+            result = Math.min(result, curr);
+        }
+
+        return result;
+    }
+}

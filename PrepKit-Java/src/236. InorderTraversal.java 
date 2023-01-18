@@ -27,7 +27,7 @@ class Solution {
                 TreeNode leftSide = current.left;
                 System.out.println(leftSide.val);
                 while(leftSide.right != null &&
-                     leftSide.right != current){
+                    leftSide.right != current){
                     leftSide = leftSide.right;
                 }
                 
@@ -42,8 +42,8 @@ class Solution {
                 }
             }
         }
-        //if (root == null) return result;
-        //inorderGenerator(root);
+            //if (root == null) return result;
+            //inorderGenerator(root);
         
         return result;
     }

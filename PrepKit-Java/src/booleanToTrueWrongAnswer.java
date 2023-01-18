@@ -65,7 +65,7 @@ class Solution {
             } else if (s.charAt(l) == '|') {
                 if (chooser == 1) {
                     ways += ((lft * rft) % mod + (lft * rff) % mod + (lff * rft) % mod) % mod;
-                } else {
+                } else {    
                     ways += (lff * rff) % mod;
                 }
             } else {
