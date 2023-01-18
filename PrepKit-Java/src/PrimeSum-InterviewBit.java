@@ -6,7 +6,7 @@ public class Solution {
         }
         else {
             if (A==4) return new int[]{2,2};
-            for (int i=3; i*i<=A; i++){
+            for (int i=3; i*i<=A; i+=2){
                 if (isPrime(i) && isPrime(A-i)){
                     return new int[]{i,A-i};
                 }
