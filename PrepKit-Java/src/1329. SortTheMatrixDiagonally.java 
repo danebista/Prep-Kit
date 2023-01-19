@@ -1,0 +1,25 @@
+class Solution {
+    public int[][] diagonalSort(int[][] mat) {
+        Map<Integer, PriorityQueue<Integer>> hashmap = new HashMap<>();
+        for (int i=0; i<mat.length; i++){
+            for (int j=0; j<mat[0].length; j++){
+                if (hashmap.containsKey(i-j)){
+                    hashmap.get(i-j).offer(mat[i][j]);
+                }
+                else{
+                    PriorityQueue<Integer> pq = new PriorityQueue<>();
+                    pq.offer(mat[i][j]);
+                    hashmap.put(i-j, pq);
+                }
+            }
+        }
+
+        for (int i=0; i<mat.length; i++){
+            for (int j=0; j<mat[0].length; j++){
+                mat[i][j] = hashmap.get(i-j).poll();
+            }
+        }
+
+        return mat;
+    }
+}
