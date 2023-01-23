@@ -63,6 +63,9 @@ class Solution {
 
         long sum = 0;
         for (int i = 0; i < arr.length; i++) {
+            // in how many subarray am i the minimum before me, in how many subarrays am I the maximum after me
+           // sum+= nge * arr[i] + pge * arr[i] - nse * arr[i] -pse * arr[i]
+
             sum += (nge[i] * pge[i] - nse[i] * pse[i]) * arr[i];
         }
         return sum;
