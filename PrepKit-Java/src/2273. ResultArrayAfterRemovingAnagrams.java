@@ -22,3 +22,7 @@ class Solution {
         return result;
     }
 }
+
+
+['ab', 'ba', 'a', 'c']
+['ab','a','c']
