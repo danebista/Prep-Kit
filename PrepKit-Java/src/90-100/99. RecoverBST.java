@@ -52,7 +52,7 @@ class Solution {
                     }
                     second = root;
                 }
-                previous = root;
+                previous = root;    
                 root = root.right;
             } else {
                 TreeNode left = root.left;
