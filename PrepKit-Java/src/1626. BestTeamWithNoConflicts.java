@@ -3,49 +3,36 @@ class Solution {
         int n=scores.length;
         
         int[][] arr = new int[n][2];
-        
+        int[][] dp = new int[n][n+1];
+        for (int[] d: dp){
+            Arrays.fill(d, -1);
+        }
+
         for(int i=0;i<n;i++){
             arr[i][0]=scores[i];
             arr[i][1]=ages[i];
         }
 
         Arrays.sort(arr, (a,b)-> a[1]==b[1]? a[0]-b[0]: a[1]-b[1]);
-        int[]dp = new int[n+1];
-        int max=0;
-        for(int i=0;i<n;i++){
-            dp[i]=arr[i][0];
-            for(int j=i-1;j>=0;j--){
-              if(arr[j][0]<=arr[i][0]) dp[i]=Math.max(dp[i],dp[j]+arr[i][0]);
-            }
-            max=Math.max(dp[i],max);
-        }
-
-        return max;
-       
-	   //here we can also uing DFS+Memory
-        // Map<Pair<Integer,Integer>,Integer> memo= new HashMap<>();
-        // int max=0;
-        // for(int i=0;i<n;i++){
-        //     max=Math.max(max,dfs(arr,i,0,memo));    
-        // }
+        return dfs(arr,0,-1, dp);
         
     }
 
-    int dfs(int[][] arr,int idx,int pre){
+    int dfs(int[][] arr,int idx,int pre, int[][]dp){
        
         if(idx==arr.length)return 0;
-    
+        if (dp[idx][pre+1]!=-1) return dp[idx][pre+1];
         int ans=0;
         //use 
         int a = Integer.MIN_VALUE;
-        if(arr[idx][0]>=pre){
-            a= dfs(arr,idx+1,arr[idx][0])+arr[idx][0];
+        if( pre==-1 || arr[idx][0]>=arr[pre][0]){
+            a= dfs(arr,idx+1,idx, dp)+arr[idx][0];
           
         } 
         //not use
-        int b = dfs(arr,idx+1,pre);
+        int b = dfs(arr,idx+1,pre, dp);
     
-        return Math.max(a,b);
+        return dp[idx][pre+1]=Math.max(a,b);
 
     }
 }
