@@ -1,0 +1,15 @@
+class Solution {
+    public int minSwaps(String s) {
+         int close=0;
+         int maxAtATime = 0;
+         for (int i=0; i<s.length();i++){
+             if (s.charAt(i)=='[') close--;
+             else close++;
+             maxAtATime = Math.max(maxAtATime, close);
+         }
+         //Since we have maximum closing at a time, one swap reduces the number of 
+         //brackets by 2. so the answer would be (maxAtATime+1)/2
+
+         return (maxAtATime+1)/2; 
+    }
+}
