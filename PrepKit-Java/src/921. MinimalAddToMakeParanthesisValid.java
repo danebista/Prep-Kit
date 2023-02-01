@@ -17,3 +17,42 @@ class Solution {
         return add+Math.abs(open-close);
     }
 }
+
+class Solution {
+    public int minAddToMakeValid(String S) {
+        if (S == null || S.length() == 0) {
+            return 0;
+        }
+        
+        int open = 0;
+        int res = 0;
+        
+        for (char c : S.toCharArray()) {
+            if (c == '(') {
+                open++;
+            } else {
+                open--;
+                if (open < 0) {
+                    res++;
+                    open++;
+                }
+            }
+        }
+        
+        int close = 0;
+        for (int i = S.length() - 1; i >= 0; i--) {
+            char c = S.charAt(i);
+            if (c == ')'){
+                close++;
+            } else {
+                close--;
+                if (close < 0) {
+                    res++;
+                    close++;
+                }
+            }
+        }
+        
+        return res;
+    }
+}
