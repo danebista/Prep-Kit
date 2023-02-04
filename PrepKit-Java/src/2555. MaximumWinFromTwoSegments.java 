@@ -1,0 +1,38 @@
+class Solution {
+    public int maximizeWin(int[] prizePositions, int k) {
+        int n = prizePositions.length;
+        int[] leftMax = new int[n], rightMax = new int[n];
+        // leftMax[i]: max on the left of i (including i) 
+        // rightMax[i]: max on the right of i (including i)
+
+        int j = 0;
+        leftMax[0] = 1;
+        for(int i = 1; i < n; i++) {
+            while (prizePositions[i] - prizePositions[j] > k) j++;
+            leftMax[i] = Math.max(leftMax[i - 1], i - j + 1);
+            // leftMax[i]: the max between leftMax[i-1], and
+            // the number in the window of size k from i to the left
+        }
+        
+        j = n - 1;
+        rightMax[n - 1] = 1;
+        for(int i = n - 2; i >= 0; i--) {
+            while (prizePositions[j] - prizePositions[i] > k) j--;
+            rightMax[i] = Math.max(rightMax[i + 1], j - i + 1);
+            // rightMax[i]: the max between rightMax[i+1], and
+            // the number in the window of size k from i to the right
+        }
+        
+        int result = 0;
+        
+        for(int i = 0; i < n; i++) {
+            // XXXXXXXXXX i-1 i XXXXXXXXXXX for each i to get leftMax[i - 1] + rightMax[i]
+            // edge cases: when i = 0 no leftMax, when i = n - 1 no rightMax
+            //dont include same twice.
+            result = Math.max(result, (i == 0 ? 0 : leftMax[i - 1]) + rightMax[i]);
+        }
+        
+        return result;
+    }
+}   
+  
