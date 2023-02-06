@@ -1,0 +1,14 @@
+class Solution {
+    public int findKthPositive(int[] arr, int k) {
+         for (int i=1, j=0; i<=1000 && j<arr.length; i++){
+             if (i==arr[j]){
+                j++;
+                continue;
+             } 
+             k--;
+             if (k==0) return i;
+         }
+
+         return k+arr[arr.length-1];
+    }
+}
