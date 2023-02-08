@@ -23,6 +23,7 @@ class Solution {
     }
 
     public boolean isPossible(int[] weights, int days, int mid){
+        //WITHOUT STARTING WITH ONE DIFFICULT TO DO.
         int count = 1;
         int start = 0;
         for (int i=0; i< weights.length; i++){
@@ -30,10 +31,13 @@ class Solution {
             start+=weights[i];
             if (start>mid){
                 count++;
-                if (count> days) return false;
                 start=weights[i];
             }
         }
-        return true;
+        if (start>mid){
+                count++;
+            }
+        if (count<=days) return true;
+        return false;
     }
 }
