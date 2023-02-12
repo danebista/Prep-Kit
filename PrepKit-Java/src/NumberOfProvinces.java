@@ -2,58 +2,6 @@ class Solution {
     long answer;
     public long minimumFuelCost(int[][] roads, int seats) {
         answer = 0;
-        HashSet<Integer> visited = new HashSet<>();
-        HashMap<Integer, List<Integer>> hashmap = new HashMap<>();
-        long[] visit=new long[roads.length]; 
-        for (int[] road: roads){
-            if (!hashmap.containsKey(road[0])){
-                hashmap.put(road[0], new ArrayList<>());
-            }
-
-            if (!hashmap.containsKey(road[1])){
-                hashmap.put(road[1], new ArrayList<>());
-            }
-            hashmap.get(road[0]).add(road[1]);
-            hashmap.get(road[1]).add(road[0]);
-        }
-        
-        dfs(0, hashmap, seats, -1, visit);
-
-        return answer;
-
-    }
-
-    public long dfs(int node, HashMap<Integer, List<Integer>> hashmap, int seats,int parent, long[] visit){
-        long cnt = 1;
-
-        if (!hashmap.containsKey(node)) {
-            visit[node]=cnt;
-            return cnt;
-        }
-
-        for (Integer r:hashmap.get(node)){
-            if (r!=parent){
-                cnt+=dfs(r, hashmap, seats, node, visit);
-            }
-        }
-
-        long answer = 0;
-        if (cnt% seats==0){
-            answer+= cnt/seats;
-        }
-        else{
-            answer+=1+cnt/seats;
-        }
-        visit[node] = answer; 
-        
-        return cnt;
-    }
-}
-
-class Solution {
-    long answer;
-    public long minimumFuelCost(int[][] roads, int seats) {
-        answer = 0;
     
         HashMap<Integer, List<Integer>> hashmap = new HashMap<>();
         for (int[] road: roads){
