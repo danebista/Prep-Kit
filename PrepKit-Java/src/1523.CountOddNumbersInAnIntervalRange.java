@@ -5,4 +5,4 @@ class Solution {
         if (val%2==1 && high%2==1 && low%2==1) return val/2+1;
         return val/2;
     }
-}
+}s
