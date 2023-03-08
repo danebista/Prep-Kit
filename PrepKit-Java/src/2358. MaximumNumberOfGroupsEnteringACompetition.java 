@@ -1,0 +1,24 @@
+class Solution {
+    public int maximumGroups(int[] grades) {
+        Arrays.sort(grades);
+        int currCount = 0;
+        int prevCount = 0;
+        int curr = 0;
+        int prev = 0;
+        int res=0;
+        for (int grad: grades){
+           curr+=grad;
+           currCount+=1;
+           if (prevCount < currCount && prev < curr){
+            
+               prevCount = currCount;
+               res+=1;
+               prev=curr;
+               currCount=0;
+               curr=0;
+           }
+        }
+        
+        return res;
+    }
+}
