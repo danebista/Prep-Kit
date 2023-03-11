@@ -1,0 +1,79 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public String getDirections(TreeNode root, int startValue, int destValue) {
+        HashMap<Integer, HashMap<Integer, String>> hashmap = new HashMap<>();
+        buildGraph(hashmap, root);
+        HashSet<Integer> hashset= new HashSet<>();
+        StringBuilder sb = new StringBuilder();
+        dfs(startValue, destValue, hashmap,hashset, sb);
+        return sb.toString();
+    }
+
+    public boolean dfs(int start, int end, HashMap<Integer, HashMap<Integer, String>> hashmap, HashSet<Integer> visited, StringBuilder sb){
+
+        if (start==end){
+            return true;
+        }
+        visited.add(start);
+
+        HashMap<Integer, String> neighbors = hashmap.get(start);
+        for (Integer neigh: neighbors.keySet()){
+            if (visited.contains(neigh)) continue;
+            visited.add(neigh);
+            sb.append(neighbors.get(neigh));
+            if (dfs(neigh, end, hashmap, visited, sb)) return true;
+            visited.remove(neigh);
+            sb.deleteCharAt(sb.length()-1);
+        }
+        
+        return false;
+    }
+
+    public void buildGraph(HashMap<Integer, HashMap<Integer, String>> hashmap, TreeNode root){
+        if (root==null) return;
+        
+        if (root.left!=null){
+            if (!hashmap.containsKey(root.left.val)){
+                hashmap.put(root.left.val, new HashMap<>());
+            }
+
+            if (!hashmap.containsKey(root.val)){
+                hashmap.put(root.val, new HashMap<>());
+            }
+
+            hashmap.get(root.left.val).put(root.val, "U");
+            hashmap.get(root.val).put(root.left.val, "L");
+        }
+
+        if (root.right!=null){
+            if (!hashmap.containsKey(root.right.val)){
+                hashmap.put(root.right.val, new HashMap<>());
+            }
+
+            if (!hashmap.containsKey(root.val)){
+                hashmap.put(root.val, new HashMap<>());
+            }
+
+            hashmap.get(root.right.val).put(root.val, "U");
+            hashmap.get(root.val).put(root.right.val, "R");
+        }
+
+        buildGraph(hashmap, root.left);
+        buildGraph(hashmap, root.right);
+        
+    }
+}
