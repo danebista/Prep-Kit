@@ -1,2 +1,16 @@
-* import pandas as pd import zmq import msgpack import csv import openpyxl from openpyxl import load_workbook   ctx = zmq.Context()   # The REQ talks to Pupil remote and receives the session unique IPC SUB PORT pupil_remote = ctx.socket(zmq.REQ)   ip = 'localhost'  # If you talk to a different machine use its IP. port = 50020  # The port defaults to 50020. Set in Pupil Capture GUI.   pupil_remote.connect(f'tcp://{ip}:{port}')   # Request 'SUB_PORT' for reading data pupil_remote.send_string('SUB_PORT') sub_port = pupil_remote.recv_string()   # Assumes `sub_port` to be set to the current subscription port subscriber = ctx.socket(zmq.SUB) subscriber.connect(f'tcp://{ip}:{sub_port}') subscriber.subscribe('blink')  # receive all gaze messages   workbook = openpyxl.Workbook() worksheet = workbook.create_sheet('new_sheet')  # create a new sheet columnsetter = [] val = 0 #sheetName=2 #temp = load_workbook(filename='out6.xlsx') #sheetName = temp.sheetnames[-1] #num = 0   #for c in sheetName: #    if c.isdigit(): #        num = num * 10 + int(c)   #num+=1   while True:     topic, payload = subscriber.recv_multipart()     message = msgpack.loads(payload)         if message["base_data"]:         df = pd.DataFrame(message["base_data"])         df1 = pd.read_excel('out6.xlsx', sheet_name='Sheet1')         result = pd.concat([df, df1])         print(result)                 writer = pd.ExcelWriter('out6.xlsx', engine='openpyxl')         df.to_excel(writer, sheet_name='Sheet1',index=False, header=False)          # with pd.ExcelWriter('out6.xlsx', mode='a') as writer:        #     name = str(num)        #     df.to_excel(writer, index=False, header=False)        #     num+=1          # val += 1     #print(f"{topic}: {message}")     #file.writerow([topic,message])
-has context menuComposeParagraph
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int[]count1 =new int[26];
+        for (int i=0; i< ransomNote.length(); i++){
+            count1[ransomNote.charAt(i)-'a']++;
+        }
+        for (int i=0; i< magazine.length(); i++){
+            count1[magazine.charAt(i)-'a']--;
+        }
+
+        for (int i=0; i<26; i++){
+            if (count1[i]>0) return false;
+        }
+        return true;
+    }
+}
