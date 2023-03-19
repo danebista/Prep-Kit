@@ -23,3 +23,5 @@ class Solution {
         return ret;
     }
 }
+
+//IfANumberHasAlreadyBeenUsed,Can'tUseSameToMakeAnotherNumber
