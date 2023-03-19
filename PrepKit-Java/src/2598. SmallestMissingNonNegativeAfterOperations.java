@@ -1,25 +1,34 @@
 class Solution {
     public int findSmallestInteger(int[] nums, int value) {
-        int n = nums.length;
-        Map<Integer, Integer> freq = new HashMap<>();
-        for (int i = 0; i < n; i++) {
-            int m = nums[i] % value;
-            
-            if (m < 0) m += value;
-            freq.put(m, freq.getOrDefault(m, 0) + 1);
-            
-        }
+        TreeSet<Integer> result = new TreeSet<>();
         
-        int ret = 0;
-        while (true) {
-            if (!freq.containsKey(ret % value)) break;
-            freq.put(ret % value, freq.get(ret % value) - 1);
-            if (freq.get(ret % value) == 0) {
-                freq.remove(ret % value);
+        for (int i=0; i<nums.length; i++){
+           if (nums[i]<0 && (-1*nums[i])%value==0){
+               result.add(0);
+           }
+           else if (nums[i]<0) continue;
+           else{
+               System.out.println(nums[i]%value);
+               result.add(nums[i]%value);
+               result.add(nums[i]);
+           }
+        }
+        int count = 0;
+        for (int i: result){
+            System.out.println(result);
+            if (i!=count)return count;
+            count++;
+        }
+        while (true){
+            if (result.contains(count-value)){
+                result.add(count);
+                count++;
             }
-            ret++;
+            else {
+                break;
+            }
         }
+        return count;
         
-        return ret;
     }
 }
