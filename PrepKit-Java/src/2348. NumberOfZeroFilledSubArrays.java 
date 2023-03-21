@@ -1,0 +1,14 @@
+class Solution {
+    public long zeroFilledSubarray(int[] nums) {
+        long countZeros = 0;
+        long sum=0;
+        
+        for (int i=0; i< nums.length; i++){
+            if (nums[i]==0) countZeros++;
+            if (nums[i]!=0) countZeros=0;
+            sum+=countZeros;
+        }
+
+        return sum;
+    }
+}
