@@ -1,0 +1,63 @@
+class Solution {
+    public int makeConnected(int n, int[][] connections) {
+        UnionFind union = new UnionFind(n);
+    
+
+        for (int i=0; i< connections.length; i++){
+           
+            union.merge(connections[i][0], connections[i][1]);
+        }
+        int count=0;
+        for (int i=0; i<n; i++){
+            
+            if (union.parent[i]==i){count++;}
+            
+        }
+
+        //connections.length<n-1 no replacing and making
+
+        if (count <=0 || connections.length<n-1) return -1;
+        return count-1;
+    }
+
+
+    class UnionFind{
+        int[] parent;
+        int[] rank;
+
+        UnionFind(int n){
+            parent = new int[n];
+            for (int i=0; i< n; i++){
+                parent[i]=i;
+            }
+            rank = new int[n];
+        }
+
+        public int parentVal(int node){
+            if (node == parent[node]){
+                return node;
+            }
+            parent[node] = parentVal(parent[node]);
+            return parent[node];
+        }
+
+        public void merge(int n1, int n2){
+            int parent1 = parentVal(n1);
+            int parent2 = parentVal(n2);
+            if (parent1 == parent2) return;
+
+            if (rank[parent1]> rank[parent2]){
+                parent[parent2]=parent[parent1];
+            }
+            else if (rank[parent2]> rank[parent1]){
+                parent[parent1]= parent[parent2];
+            }
+
+            else{
+                rank[parent1]++;
+                parent[parent2] = parent1;
+            }
+
+        }
+    }
+}
