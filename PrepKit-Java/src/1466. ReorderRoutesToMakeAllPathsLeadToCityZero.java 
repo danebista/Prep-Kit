@@ -1,0 +1,67 @@
+class Solution {
+    static int count1=0;
+    static void isConnected(HashMap<Integer,List<Integer>> h,int strt,boolean visited[])
+    {
+       List<Integer> al1=h.get(strt);
+        visited[strt]=true;
+        if(al1!=null)
+        {
+            
+            for(int c:al1)
+            {
+                boolean flag  = true;
+                if (c<0) flag=false;
+                c= Math.abs(c);
+                if(visited[c]==false)
+                {
+                if (flag==true){
+                    count1=count1+1;
+                }
+                
+                isConnected(h,c,visited);
+                }
+            }
+        }
+        
+    }
+    public int minReorder(int n, int[][] prerequisites) {
+         HashMap<Integer,List<Integer>> h=new HashMap<>();
+        count1=0;
+        int count=0;
+        for(int a[]:prerequisites)
+        {
+            int strt=a[0];
+            int end=a[1];
+            if(h.containsKey(strt))
+            {
+                List<Integer> al1=h.get(strt);
+                al1.add(end);
+                h.put(strt,al1);
+            }
+            else
+            {
+                List<Integer> al=new ArrayList<>();
+                al.add(end);
+                h.put(strt,al);
+            }
+            if (h.containsKey(end)){
+                List<Integer> a12 = h.get(end);
+                a12.add(-strt);
+                h.put(end, a12);
+            }
+            else{
+                List<Integer> a12 = new ArrayList<>();
+                a12.add(-strt);
+                h.put(end, a12);
+            }
+            count++;
+        }
+        boolean visited[]=new boolean[n];
+        for(int i=0;i<n;i++)
+        {
+         if(visited[i]==false)
+         isConnected(h,i,visited);
+        }
+        return count1;
+    }
+}
