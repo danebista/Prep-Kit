@@ -1,0 +1,49 @@
+
+class Solution {
+    public int partitionString(String s) {
+       boolean[] bool = new boolean[26];
+        int count = 0;
+        for (int i=0; i< s.length(); i++){
+            if (bool[s.charAt(i)-'a']){
+                count++;
+                for (int j=0; j< 26; j++){
+                    bool[j]=false;
+                }
+            }
+            bool[s.charAt(i)-'a']=true;
+        }
+
+        return count+1;
+    }
+}
+
+
+//TLE
+
+class Solution {
+    public int partitionString(String s) {
+        HashSet<String> hashset = new HashSet<>();
+        return helper(0, s);
+    }
+
+    public int helper(int index, String s){
+
+        boolean[] val = new boolean[26];
+
+        if (index>=s.length()) return 0;
+        int min = Integer.MAX_VALUE;
+ 
+        for (int i=index; i<s.length(); i++){
+            if (val[s.charAt(i)-'a']!=true){
+                val[s.charAt(i)-'a']=true;
+                min= Math.min(1+helper(i+1, s), min); 
+            }
+            else {
+                return min;
+            }
+        }
+    
+
+        return min;
+    }
+}
