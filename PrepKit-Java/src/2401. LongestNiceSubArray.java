@@ -19,3 +19,8 @@ class Solution {
         return length;
     }
 }
+//011
+//100
+//111
+//OR sets bit
+//XOR brings back to original
