@@ -1,0 +1,32 @@
+ class Solution {
+    public int maxSatisfaction(int[] satisfaction) {
+        Arrays.sort(satisfaction);
+        int likeTime = 0;
+        int sum = 0;
+        int ans = 0;
+        for (int i = satisfaction.length - 1; i >= 0; i--) {
+            ans += satisfaction[i] + sum;
+            sum += satisfaction[i];// best trick to add last one n times
+            likeTime = Math.max(likeTime, ans);
+        }
+        return likeTime;
+   }
+}
+ 
+ public int maxSatisfaction(int[] satisfaction) {
+        Arrays.sort(satisfaction);
+        int[][]memoiser = new int[satisfaction.length][500];
+        for (int[]mem:memoiser){
+            Arrays.fill(mem, -90000);
+        }
+        return helper(0, satisfaction, 1, memoiser);
+    }
+    public int helper(int index, int[] satisfaction, int val, int[][]memoiser){
+        
+        if (index>=satisfaction.length) return 0;
+        if (memoiser[index][val]!=-90000) return memoiser[index][val];
+        int nottake = helper(index+1, satisfaction, val, memoiser);
+        int take = satisfaction[index] * val + helper(index+1, satisfaction, val+1, memoiser);
+
+        return memoiser[index][val] = Math.max(take, nottake);
+    }
