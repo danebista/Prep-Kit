@@ -1,0 +1,52 @@
+class Solution {
+    public int ways(String[] pizza, int k) {
+        int m = pizza.length;
+        int n= pizza[0].length();
+        int[][]preSum = new int[m+1][n+1];
+        int[][][] val = new int[pizza.length+1][pizza[0].length()][k];
+        for (int[][] dp: val){
+            for (int []d:dp){
+                Arrays.fill(d,-1);
+            }
+        }
+
+        int mod =(int) 1e9+7;
+        for (int i=m-1; i>=0; i--){
+         for (int j=n-1; j>=0;j--){
+             preSum[i][j] = preSum[i+1][j]+preSum[i][j+1]-preSum[i+1][j+1];
+             preSum[i][j]+= pizza[i].charAt(j)== 'A' ?1:0;
+             preSum[i][j]= preSum[i][j];
+         }
+        }
+   
+   
+        return helper(preSum, k-1, 0,0, val)%mod;   
+    }
+
+    public int helper(int[][] preSum, int k, int i, int j, int[][][]val){
+        //order matters here if I do k==0 first invalid case
+        int mod =(int) 1e9+7;
+        if (preSum[i][j]==0) return 0;
+        if (k==0) return 1;
+        if (val[i][j][k]!=-1) return val[i][j][k];
+
+        int res = 0;
+        for (int m=i+1; m< preSum.length; m++){
+            int value = preSum[i][j]-preSum[m][j];
+            if (value>0){
+                res+=helper(preSum, k-1,m, j, val)%mod;
+                res= res%mod;
+            }
+        }
+
+        for (int n=j+1; n< preSum[0].length; n++){
+            int value = preSum[i][j]-preSum[i][n];
+            if (value>0){
+                res+= helper(preSum, k-1, i, n, val);
+                res= res%mod;
+            }
+        }
+
+        return val[i][j][k]=res%mod;
+    }
+}
