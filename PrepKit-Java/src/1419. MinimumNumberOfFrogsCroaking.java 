@@ -1,0 +1,37 @@
+class Solution {
+    public int minNumberOfFrogs(String croakOfFrogs) {
+        int[] freq = new int[26];
+        int max=0;
+        for (char c: croakOfFrogs.toCharArray()){
+            freq[c-'a']++;
+            if (freq['c'-'a']< freq['r'-'a'] 
+            || freq['c'-'a']< freq['o'-'a']
+            || freq['c'-'a']< freq['a'-'a']
+            || freq['c'-'a']< freq['k'-'a']) return -1;
+            
+            if (freq['r'-'a']< freq['o'-'a']
+            || freq['r'-'a']< freq['a'-'a']
+            || freq['r'-'a']< freq['k'-'a']) return -1;
+
+            if (freq['o'-'a']< freq['a'-'a']
+            || freq['o'-'a']< freq['k'-'a']) return -1;
+
+            if (freq['a'-'a']< freq['k'-'a']) return -1;
+
+            if (c=='k'){
+                freq['c'-'a']--;
+                freq['r'-'a']--;
+                freq['o'-'a']--;
+                freq['a'-'a']--;
+                freq['k'-'a']--;
+                if (freq['c'-'a']<0 || freq['r'-'a']<0 || freq['o'-'a']<0
+                || freq['a'-'a']<0 || freq['k'-'a']<0) return -1;
+            }
+            max = Math.max(max, freq[c-'a']);
+        }
+        if (freq['c'-'a']!=0 || freq['r'-'a']!=0 || freq['o'-'a']!=0
+        || freq['a'-'a']!=0 || freq['k'-'a']!=0) return -1;
+
+        return max;
+    }
+}
