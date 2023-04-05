@@ -1,0 +1,34 @@
+class Solution {
+    public int minimumSwap(String s1, String s2) {
+        if (s1.length()!=s2.length()) return -1;
+        int xy=0;
+        int yx=0;
+        for (int i=0; i< s1.length(); i++){
+            if (s1.charAt(i)=='x' && s2.charAt(i)=='y')xy++;
+            if (s1.charAt(i)=='y' && s2.charAt(i)=='x') yx++;
+        }
+
+        int remxy = xy % 2;
+        int remyx = yx % 2;
+
+        if ((remxy+remyx)%2==1) return -1;
+
+        return xy/2 + yx/2 + remxy+ remyx;
+    }
+}
+
+
+//EACH X/Y PAIR CAN BE SWAPED WITH 1.
+// EACH Y/X PAIR CAN BE SWAPPED WITH 1.
+
+// if there are odd number of x/y pairs we cannot swap 
+// xxx
+// yyy
+
+// no swaps will ever equate these
+
+// however if there is also a y/x pair we can swap
+
+//xxxy
+//yyyx
+// here x/y and y/x pair can be converted to x/y x/y pair and then equated. 
