@@ -73,3 +73,53 @@ class Solution {
         else return "";
     }
 }
+
+
+/// Better solution from better people
+
+
+class Solution {
+    int max=0;
+    public String largestTimeFromDigits(int[] arr) {
+        boolean[] finals = new boolean[arr.length];
+        permutation(arr, finals,0, 0);
+        
+        if (max==0){
+           int count=0;
+           for (int i=0; i< arr.length; i++){
+               if (arr[i]==0)count++;
+           }
+           if (count==4) return "00:00";
+           else return "";
+        }
+
+        StringBuilder strs=new StringBuilder();
+        strs.append(max/1000);
+        max=max%1000;
+        strs.append(max/100);
+        max=max%100;
+        strs.append(":");
+        strs.append(max/10);
+        max=max%10;
+        strs.append(max);
+        
+        return strs.toString();
+    }
+
+    public void permutation(int[]arr, boolean[]finals, int index, int permutation){
+        if (index>=arr.length){
+            if(permutation<2399 && permutation%100<60){
+                max = Math.max(permutation, max);
+            }
+            return;
+        }
+
+        for (int i=0; i< arr.length; i++){
+            if (finals[i]!=true){
+                finals[i]=true;
+                permutation(arr, finals, index+1, permutation*10+arr[i]);
+                finals[i]=false;
+            }
+        }
+    }
+}
