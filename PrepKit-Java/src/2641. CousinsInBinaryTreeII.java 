@@ -1,0 +1,81 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    public TreeNode replaceValueInTree(TreeNode root) {
+        if (root==null) return root;
+        List<Integer> sum = new ArrayList<>();
+        Queue<TreeNode> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()){
+            int size= queue.size();
+            int total = 0;
+
+            for (int i=0; i< size; i++){
+                TreeNode curr = queue.poll();
+                total+= curr.val;
+                if (curr.left!=null){
+                    queue.offer(curr.left);
+                }
+                if (curr.right!=null){
+                    queue.offer(curr.right);
+                }
+            }
+            sum.add(total);
+        }
+
+        helper(root, sum,0);
+        root.val=0;
+        return root;
+
+    }
+
+    public void helper(TreeNode root, List<Integer> sum, int level){
+        
+        if (root==null)return;
+        int leftVal=-1;
+        if (root.left!=null){
+            leftVal = root.left.val;
+        }
+
+        int rightVal = -1;
+        if (root.right!=null){
+            rightVal = root.right.val;
+        }
+       
+        if (level+1<sum.size()){
+            int total = sum.get(level+1);
+            if (leftVal!=-1){
+                total-=leftVal;
+            }
+            if (rightVal!=-1){
+                total-=rightVal;
+            }
+
+            if (root.left!=null){
+                root.left.val= total;
+            }
+            if (root.right!=null){
+                root.right.val= total;
+            }
+            
+        }
+
+        helper(root.left, sum, level+1);
+        helper(root.right, sum, level+1);
+
+    }
+}
