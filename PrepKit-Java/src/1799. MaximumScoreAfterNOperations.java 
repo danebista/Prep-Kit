@@ -1,0 +1,30 @@
+class Solution {
+    public int maxScore(int[] nums) {
+        int[]masker = new int[1<<14];
+        Arrays.fill(masker,-1);
+        return helper(1, 0,  nums, masker);
+    }
+
+    public int helper(int value, int mask, int[]nums, int[]masker){
+        if (value> nums.length/2) return 0;
+        if (masker[mask]!=-1) return masker[mask];
+
+        int val=0;
+        for (int i=0; i< nums.length; i++){
+            if ((mask>>i & 1)==1) continue;
+            for (int j=i+1; j< nums.length; j++){
+                if ((mask>>j & 1)==1) continue;
+                int latestmask = 1<<i | 1<<j | mask;
+                val = Math.max(val, value*gcd(nums[i], nums[j])
+                               + helper(value+1, latestmask, nums, masker));
+            }
+        }
+
+        return masker[mask]= val;
+    }
+
+    public int gcd(int a, int b){
+        if (b==0)return a;
+        return gcd(b, a%b);
+    }
+}
