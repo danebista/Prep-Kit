@@ -1,0 +1,32 @@
+class Solution {
+    long mod = (long)1e9+7;
+    public int countPaths(int[][] grid) {
+        long count=0;
+        long[]dp = new long[grid.length* grid[0].length+grid[0].length+1];
+        Arrays.fill(dp,-1);
+        for (int i=0; i< grid.length; i++){
+            for (int j=0; j< grid[0].length; j++){
+                count+=helper(i, j, dp,0, grid)%mod;
+            }
+        }
+
+        return (int)(count%mod);
+    }
+
+    public long helper(int i, int j, long[]dp, int prev, int[][]grid){
+        if (i<0 || j<0 || i>=grid.length || j>=grid[0].length || grid[i][j]<= prev){
+            return 0;
+        }
+        int key = i* grid[0].length+j;
+        if (dp[key]!=-1) return dp[key];
+        long count=1;
+        int[]drs=new int[]{0,1,0,-1,0};
+        for (int k=0; k<=3;k++){
+            int corrx = i+drs[k];
+            int corry = j+drs[k+1];
+            count+= helper(corrx,corry, dp, grid[i][j], grid)%mod;
+        }
+
+        return dp[key]= count%mod;
+    }
+}
