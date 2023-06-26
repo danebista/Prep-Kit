@@ -1,0 +1,45 @@
+class Solution {
+    public long totalCost(int[] costs, int k, int candidates) {
+       PriorityQueue<Pair> start = new PriorityQueue<>((a,b)->(a.cost==b.cost)?a.index-b.index: a.cost-b.cost);
+       PriorityQueue<Pair> end = new PriorityQueue<>((a,b)->(a.cost==b.cost)?a.index-b.index: a.cost-b.cost);
+       int l=0;
+       int r=costs.length-1;
+       long result=0;
+       for (int i=0; i< k; i++){
+           while (l<=r && start.size()<candidates){
+               start.offer(new Pair(costs[l], l));
+               l++;
+           }
+           while (l<=r && end.size()<candidates){
+               end.offer(new Pair(costs[r], r));
+               System.out.println(costs[r]);
+               r--;
+           }
+           if (start.isEmpty()){
+               result+=end.poll().cost;
+           }
+           else if (end.isEmpty()){
+               result+=start.poll().cost;
+           }
+           else {
+               if (start.peek().cost<= end.peek().cost){
+                   result+=start.poll().cost;
+               }
+               else {
+                   result+=end.poll().cost;
+               }
+           }
+           
+       }
+       return result;
+    }
+
+    class Pair{
+        int cost;
+        int index;
+        Pair(int cost, int iandex){
+            this.cost = cost;
+            this.index = index;
+        }
+    }
+}
