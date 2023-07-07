@@ -1,0 +1,42 @@
+class Solution {
+    public int minimumOperations(int[] nums, int start, int goal) {
+        HashSet<Integer> hashset = new HashSet<>();
+        Queue<Integer> queue = new LinkedList<>();
+        queue.offer(start);
+        hashset.add(start);
+        int steps = 0;
+        while (!queue.isEmpty()){
+            int size= queue.size();
+            for (int i=0; i< size; i++){
+                Integer curr = queue.poll();
+               
+                for (int j=0; j<nums.length; j++){
+                    Integer val= curr + nums[j];
+                    Integer val2 = curr - nums[j];
+                    Integer val3 = curr ^ nums[j];
+
+                    if (val==goal) return steps+1;
+                    if (val2== goal) return steps+1;
+                    if (val3==goal) return steps+1;
+
+                    if (val>=0 && val<=1000 && !hashset.contains(val)){
+                        hashset.add(val);
+                        queue.offer(val);
+                    }
+                    if (val2>=0 && val2<=1000 && !hashset.contains(val2)){
+                        hashset.add(val2);
+                        queue.offer(val2);
+                    }
+
+                    if (val3>=0 && val3<=1000 && !hashset.contains(val3)){
+                        hashset.add(val3);
+                        queue.offer(val3);
+                    }
+                }
+            }
+            steps++;
+        }
+
+        return -1;
+    }
+}
