@@ -33,3 +33,58 @@ class Solution {
         
     }
 }
+
+class Solution {
+     
+    public int maxValue(int[][] events, int k) {
+        Arrays.sort(events, (a, b) -> Integer.compare(a[0], b[0]));
+        
+        int max = Integer.MIN_VALUE;
+        if(k == 1){
+            for(int i = 0; i < events.length; i++){
+                max = Math.max(max, events[i][2]);
+            }
+            return max;
+        }
+        
+        int[][] dp = new int[events.length][k+1];
+        for(int[] row: dp){
+            Arrays.fill(row, -1);
+        }
+        return maxValue(events, k, 0, dp);
+    }
+    
+    private int maxValue(int[][] events, int k, int start, int[][] dp){
+        
+        if(start >= events.length){
+            return 0;
+        }
+        if(k == 1){
+            // if there was only one event we would go ahead and just attend it
+            return events[start][2];
+        }
+        
+        if(dp[start][k] != -1){
+            return dp[start][k];
+        }
+        
+        int max = events[start][2];
+        
+        for(int i = start + 1; i < events.length; i++){
+            int result = 0;
+            max = Math.max(events[i][2], max);
+            if(events[start][1] < events[i][0]){
+                result = events[start][2] + maxValue(events, k-1, i, dp);
+            }
+            
+            max = Math.max(result, max);
+        }
+        
+        // Skip the current iteration
+        int skip = maxValue(events, k, start+1, dp);
+        
+        max = Math.max(max, skip);
+        
+        return dp[start][k] = max;
+    }
+}
