@@ -1,0 +1,56 @@
+class Solution {
+    int[] func(int i, Map<Integer, ArrayList<Integer>> hm, int[][] adjacentPairs) {
+        int n = adjacentPairs.length + 1;
+        int[] nums = new int[n];
+        Set<Integer> visited = new HashSet<>();
+
+        // Initialize the result array with the starting element
+        nums[0] = i;
+        visited.add(i);
+
+        // Traverse through the adjacent pairs and reconstruct the array
+        for (int j = 1; j < n; j++) {
+            int prev = nums[j - 1];
+            ArrayList<Integer> neighbors = hm.get(prev);
+
+            // Find the neighbor that hasn't been visited yet
+            for (int neighbor : neighbors) {
+                if (!visited.contains(neighbor)) {
+                    nums[j] = neighbor;
+                    visited.add(neighbor);
+                    break;
+                }
+            }
+        }
+
+        return nums;
+    }
+
+    public int[] restoreArray(int[][] adjacentPairs) {
+        Map<Integer, ArrayList<Integer>> hm = new HashMap<>();
+
+        // Build the adjacency map
+        for (int[] pair : adjacentPairs) {
+            int u = pair[0];
+            int v = pair[1];
+
+            hm.putIfAbsent(u, new ArrayList<>());
+            hm.putIfAbsent(v, new ArrayList<>());
+
+            hm.get(u).add(v);
+            hm.get(v).add(u);
+        }
+
+        // Find the starting element
+        int start = 0;
+        for (int key : hm.keySet()) {
+            if (hm.get(key).size() == 1) {
+                start = key;
+                break;
+            }
+        }
+
+        // Reconstruct the array starting from the found element
+        return func(start, hm, adjacentPairs);
+    }
+}
