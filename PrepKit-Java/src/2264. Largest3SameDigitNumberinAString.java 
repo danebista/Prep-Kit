@@ -1,0 +1,18 @@
+class Solution 
+{
+    public String largestGoodInteger(String nums) 
+    {
+        String ans="";
+        int i;
+        for(i=2;i<nums.length();i++)
+        {
+            if(nums.charAt(i) == nums.charAt(i-1) && nums.charAt(i-1) == nums.charAt(i-2))
+            {
+                String s=nums.substring(i-2,i+1);
+                if(s.compareTo(ans)>0)
+                    ans=s;
+            }
+        }    
+        return ans;
+    }
+}
